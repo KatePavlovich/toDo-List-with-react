@@ -1,6 +1,7 @@
 import React from 'react'
 import Task from './components/task'
 import TodoListFooter from './components/todoListFooter';
+import TaskCreator from './components/taskCreator';
 
 class TodoList extends React.Component {
     state = {
@@ -38,10 +39,7 @@ class TodoList extends React.Component {
         return (
             <div className="container-fluid" >
                 <h2 className="app-header" > todo list </h2>
-                <header >
-                    <input onKeyPress={this.createNewTask} />
-
-                </header>
+                <TaskCreator createNewTask={this.createNewTask}/>
                 <div className="tasks">
                     {this.state.tasks.map(i => 
                     <Task task={i} deleteCallBack = {this.deleteTask}  key={Math.random((new Date()).getTime())} />
