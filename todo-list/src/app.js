@@ -7,10 +7,12 @@ class TodoList extends React.Component {
             {
                 title: 'jjjj',
                 isDone: false,
+                id: '1'
             },
             {
                 title: 'lalala',
                 isDone: false,
+                id: '2'
             }
         ]
 
@@ -19,7 +21,7 @@ class TodoList extends React.Component {
     createNewTask = (e) => {
         if (e.key === 'Enter') {
             this.setState({
-                tasks: [...this.state.tasks, {title: e.currentTarget.value, isDone: false, id: Math.random(new Date()) }]
+                tasks: [...this.state.tasks, {title: e.currentTarget.value, isDone: false}]
             })
             e.currentTarget.value = ''
         }
@@ -44,8 +46,6 @@ class TodoList extends React.Component {
                     <Task task={i} deleteCallBack = {this.deleteTask}  key={Math.random((new Date()).getTime())} />
                     )}
                 </div>
-
-
             </div>
         );
     }

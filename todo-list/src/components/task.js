@@ -5,17 +5,11 @@ class Task extends React.Component {
         task: this.props.task
     }
 
-    deleteTask(id) {
-        this.setState({
-            tasks: this.state.tasks.filter(item => item !== id)
-        })
-    }
-
     toggleTaskStatus = () => {
         let newTask = {
-                ...this.state.task,
-                isDone: !this.state.task.isDone
-            }
+            ...this.state.task,
+            isDone: !this.state.task.isDone
+        }
         this.setState({
             task: newTask
         })
@@ -23,10 +17,10 @@ class Task extends React.Component {
 
     render() {
         return (
-            <li className={this.state.task.isDone ? 'task' : 'task done'} >
-                <input type="checkbox" onChange={() => this.toggleTaskStatus} />
-                {this.state.task.title}
-                <span className="deleteBtn" onClick={() => this.props.deleteCallBack}>x</span>
+            <li className="task" id={Math.random((new Date()).getTime())}>
+                <input type="checkbox" onChange={this.toggleTaskStatus} />
+                <p className={this.state.task.isDone ? 'done' : ''} >{this.state.task.title}</p>
+                <span className="deleteBtn" onClick={() => this.props.deleteCallBack(this.props.id)}>x</span>
             </li>
         );
     }
