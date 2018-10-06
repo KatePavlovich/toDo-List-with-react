@@ -1,5 +1,6 @@
 import React from 'react'
 import Task from './components/task'
+import TodoListFooter from './components/todoListFooter';
 
 class TodoList extends React.Component {
     state = {
@@ -46,6 +47,7 @@ class TodoList extends React.Component {
                     <Task task={i} deleteCallBack = {this.deleteTask}  key={Math.random((new Date()).getTime())} />
                     )}
                 </div>
+                <TodoListFooter />
             </div>
         );
     }

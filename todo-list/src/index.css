@@ -25,3 +25,7 @@
 .done {
     text-decoration: line-through;
 }
+footer {
+  display: grid;
+  grid-template-columns: 2fr repeat(5, 1fr);
+}
