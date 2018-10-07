@@ -29,3 +29,4 @@ footer {
   display: grid;
   grid-template-columns: 2fr repeat(5, 1fr);
 }
+.selected {color: red;}

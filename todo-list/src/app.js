@@ -16,10 +16,11 @@ class TodoList extends React.Component {
                 isDone: false,
                 id: "2"
             }
-        ]
+        ],
+        filter: 'all'
     };
 
-    createNewTask = e => {
+    putTaskToState = e => {
         if (e.key === "Enter") {
             this.setState({
                 tasks: [
@@ -50,16 +51,43 @@ class TodoList extends React.Component {
         });
     }
 
+    changeFilter = (filterValue) => {
+        this.setState({ filter: filterValue })
+    }
+
+    clearComplited = () => {
+        this.setState({ tasks: this.state.tasks.filter(i => !i.isDone) })
+    }
+
     render() {
+        let { tasks, filter } = this.state
+        let filteredTasks = []
+        switch (filter) {
+            case 'all':
+                filteredTasks = tasks;
+                break;
+            case 'active':
+                filteredTasks = tasks.filter(i => !i.isDone);
+                break;
+            case 'complited':
+                filteredTasks = tasks.filter(i => i.isDone);
+                break;
+            default:
+                filteredTasks = tasks;
+        }
         return (
             <div className="container-fluid">
                 <h2 className="app-header"> todo list </h2>
-                <TaskCreator createNewTask={this.createNewTask} />
+                <TaskCreator putTaskToState={this.putTaskToState} />
                 <TasksList
-                    tasks={this.state.tasks}
+                    tasks={filteredTasks}
                     onDeleteTask={this.deleteTask}
                     onUpdateTask={this.toggleTaskStatus} />
-                <TodoListFooter />
+                <TodoListFooter
+                    tasks={tasks}
+                    filter={filter}
+                    onFilterChanged={this.changeFilter}
+                    clearComplited={this.clearComplited} />
             </div>
         );
     }
