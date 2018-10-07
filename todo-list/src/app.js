@@ -33,12 +33,19 @@ class TodoList extends React.Component {
     };
 
     toggleTaskStatus = (task) => {
+       // debugger
         let newTasksList = [...this.state.tasks]
-        for (let i = 0; i < newTasksList.length; i++) {
+        newTasksList.forEach(t => {
+            if(t.id === task.id) {
+                t.isDone = !task.isDone
+                return
+            }
+        })
+/*         for (let i = 0; i < newTasksList.length; i++) {
             if (newTasksList[i].id === task.id) {
                 newTasksList[i].isDone = task.isDone;
-            }
-        }
+            } 
+        }*/
 
         this.setState({
             tasks: newTasksList
@@ -66,7 +73,7 @@ class TodoList extends React.Component {
             case 'all':
                 filteredTasks = tasks;
                 break;
-            case 'active':
+            case 'selected':
                 filteredTasks = tasks.filter(i => !i.isDone);
                 break;
             case 'complited':

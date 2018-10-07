@@ -7,7 +7,7 @@ class TaskCreator extends React.Component {
     render() {
         return (
             <header >
-                <input onKeyPress={this.props.createNewTask} />
+                <input onKeyPress={this.props.putTaskToState} />
             </header>
         );
     }

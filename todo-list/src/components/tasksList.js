@@ -7,7 +7,7 @@ class TasksList extends React.Component {
         return (
                 <div className="tasks">
                     {this.props.tasks.map(i => 
-                    <Task task={i} deleteCallBack = {this.props.onDeleteTask} updateCallBack = {this.props.onUpdateTask} key={Math.random((new Date()).getTime())} id={this.props.id}/>
+                    <Task task={i} deleteCallBack = {this.props.onDeleteTask} updateCallBack = {this.props.onUpdateTask} key={Math.random((new Date()).getTime())}/>
                     )}
                 </div>
         );
