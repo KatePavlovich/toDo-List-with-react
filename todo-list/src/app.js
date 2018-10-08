@@ -2,6 +2,7 @@ import React from "react";
 import TodoListFooter from "./components/todoListFooter";
 import TaskCreator from "./components/taskCreator";
 import TasksList from "./components/tasksList";
+import { createTask } from "./components/services";
 
 class TodoList extends React.Component {
     constructor() {
@@ -35,27 +36,9 @@ class TodoList extends React.Component {
 
     putTaskToState = e => {
         if (e.key === "Enter") {
-
-            const data = new URLSearchParams()
-            data.append('widgetId', 119876)
-            data.append('title', e.currentTarget.value)
-
             const newTaskInput = e.currentTarget
-
-            fetch('https://repetitora.net/api/JS/Tasks', {
-                method: 'POST',
-                body: data,
-                headers: {
-                    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-                    'accept': 'application/json'
-                },
-                mode: 'cors'
-
-            })
-                .then(result => result.json())
+            createTask(newTaskInput.value, 119876)
                 .then(data => {
-                    console.log(data)
-
                     this.setState({
                         tasks: [
                             ...this.state.tasks,
@@ -64,7 +47,6 @@ class TodoList extends React.Component {
                     });
                     newTaskInput.value = "";
                 })
-
         }
     }
 
