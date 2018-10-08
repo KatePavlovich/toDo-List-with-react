@@ -4,10 +4,34 @@ import TaskCreator from "./components/taskCreator";
 import TasksList from "./components/tasksList";
 
 class TodoList extends React.Component {
-    state = {
-        tasks: [],
-        filter: 'all'
-    };
+    constructor() {
+        super()
+        this.state = {
+            tasks: [],
+            filter: 'all'
+        }
+        fetch('https://repetitora.net/api/JS/Tasks?widgetId=119876&count=30', {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                'accept': 'application/json'
+            },
+            mode: 'cors'
+        })
+            .then(result => result.json())
+            .then(tasksFromServer => {
+                let tasks = tasksFromServer.map(i => {
+                    return {
+                        id: i.id,
+                        title: i.title,
+                        isDone: i.done
+                    }
+                })
+                this.setState({
+                    tasks: tasks
+                });
+            })
+    }
 
     putTaskToState = e => {
         if (e.key === "Enter") {
