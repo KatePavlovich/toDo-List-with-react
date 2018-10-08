@@ -5,47 +5,53 @@ import TasksList from "./components/tasksList";
 
 class TodoList extends React.Component {
     state = {
-        tasks: [
-            {
-                title: "jjjj",
-                isDone: false,
-                id: "1"
-            },
-            {
-                title: "lalala",
-                isDone: false,
-                id: "2"
-            }
-        ],
+        tasks: [],
         filter: 'all'
     };
 
     putTaskToState = e => {
         if (e.key === "Enter") {
-            this.setState({
-                tasks: [
-                    ...this.state.tasks,
-                    { title: e.currentTarget.value, isDone: false, id: Math.random((new Date()).getTime()) }
-                ]
-            });
-            e.currentTarget.value = "";
+
+            const data = new URLSearchParams()
+            data.append('widgetId', 119876)
+            data.append('title', e.currentTarget.value)
+
+            const newTaskInput = e.currentTarget
+
+            fetch('https://repetitora.net/api/JS/Tasks', {
+                method: 'POST',
+                body: data,
+                headers: {
+                    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+                    'accept': 'application/json'
+                },
+                mode: 'cors'
+
+            })
+                .then(result => result.json())
+                .then(data => {
+                    console.log(data)
+
+                    this.setState({
+                        tasks: [
+                            ...this.state.tasks,
+                            { title: data.task.title, isDone: data.task.done, id: data.task.id }
+                        ]
+                    });
+                    newTaskInput.value = "";
+                })
+
         }
-    };
+    }
 
     toggleTaskStatus = (task) => {
-       // debugger
         let newTasksList = [...this.state.tasks]
         newTasksList.forEach(t => {
-            if(t.id === task.id) {
+            if (t.id === task.id) {
                 t.isDone = !task.isDone
                 return
             }
         })
-/*         for (let i = 0; i < newTasksList.length; i++) {
-            if (newTasksList[i].id === task.id) {
-                newTasksList[i].isDone = task.isDone;
-            } 
-        }*/
 
         this.setState({
             tasks: newTasksList
