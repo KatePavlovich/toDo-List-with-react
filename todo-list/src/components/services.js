@@ -1,18 +1,30 @@
+const headers = {
+    'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
+    'accept': 'application/json'
+}
+const apiUrl = 'https://repetitora.net/api/JS/Tasks'
+const corsMode = 'cors'
+
+function requestData(url, type, body) {
+    return fetch(url, {
+        method: type,
+        body: body,
+        headers: headers,
+        mode: corsMode
+
+    })
+        .then(result => result.json())
+}
+
 export function createTask(title, widgetId) {
 
     const data = new URLSearchParams()
     data.append('widgetId', widgetId)
     data.append('title', title)
 
-    return fetch('https://repetitora.net/api/JS/Tasks', {
-        method: 'POST',
-        body: data,
-        headers: {
-            'content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-            'accept': 'application/json'
-        },
-        mode: 'cors'
+    return requestData(apiUrl, 'POST', data)
+}
 
-    })
-        .then(result => result.json())
+export function getTasks(widgetId) {
+    return requestData(`${apiUrl}?widgetId=${widgetId}&count=30`, 'GET')
 }
