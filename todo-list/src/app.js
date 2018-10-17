@@ -55,12 +55,6 @@ class TodoList extends React.Component {
     });
   };
 
-  deleteTask = id => {
-    this.setState({
-      tasks: this.state.tasks.filter(item => item.id !== id)
-    });
-  };
-
   changeFilter = filterValue => {
     this.setState({ filter: filterValue });
   };
@@ -91,8 +85,7 @@ class TodoList extends React.Component {
         <TaskCreator putTaskToState={this.putTaskToState} />
         <TasksList
           tasks={filteredTasks}
-          onDeleteTask={this.deleteTask}
-          onUpdateTask={this.toggleTaskStatus}
+          onUpdateTask={this.toggleTaskStatus} 
         />
         <TodoListFooter
           tasks={tasks}

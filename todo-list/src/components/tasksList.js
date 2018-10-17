@@ -1,7 +1,6 @@
 import React from 'react'
-import Task from './task'
 import {connect} from 'react-redux'
-import {addTasks} from '../ac'
+import Task from './task'
 
 class TasksList extends React.Component {
 
@@ -9,15 +8,13 @@ class TasksList extends React.Component {
         return (
                 <div className="tasks">
                     {this.props.tasks.map(i => 
-                    <Task task={i} deleteCallBack = {this.props.onDeleteTask} updateCallBack = {this.props.onUpdateTask} key={Math.random((new Date()).getTime())}/>
+                    <Task task={i}  updateCallBack = {this.props.onUpdateTask} key={Math.random((new Date()).getTime())}/>
                     )}
                 </div>
         );
     }
 }
 
-const mapStateToProps = state => ({
-    tasks: state.tasks
-})
 
-export default connect(mapStateToProps)(TasksList)
+export default connect(state => ({
+    tasks: state.tasks}))(TasksList)

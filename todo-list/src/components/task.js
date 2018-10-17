@@ -1,16 +1,23 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { deleteTask } from '../ac'
 
 class Task extends React.Component {
+
+    handleDelete = () => {
+        const { deleteTask, task } = this.props
+        deleteTask(task.id)
+    }
 
     render() {
         return (
             <li className="task" id={this.props.id}>
                 <input type="checkbox" checked={this.props.task.isDone ? 'checked' : ''} onChange={() => this.props.updateCallBack(this.props.task)} />
                 <p className={this.props.task.isDone ? 'done' : ''} >{this.props.task.title}</p>
-                <span className="deleteBtn" onClick={() => this.props.deleteCallBack(this.props.task.id)}>x</span>
+                <span className="deleteBtn" onClick={this.handleDelete}>x</span>
             </li>
         );
     }
 }
 
-export default Task
+export default connect(null, { deleteTask })(Task)
