@@ -1,5 +1,7 @@
 import React from 'react'
 import Task from './task'
+import {connect} from 'react-redux'
+import {addTasks} from '../ac'
 
 class TasksList extends React.Component {
 
@@ -14,4 +16,8 @@ class TasksList extends React.Component {
     }
 }
 
-export default TasksList
+const mapStateToProps = state => ({
+    tasks: state.tasks
+})
+
+export default connect(mapStateToProps)(TasksList)
