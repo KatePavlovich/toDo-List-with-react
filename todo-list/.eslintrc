@@ -1,0 +1,36 @@
+{
+    "parserOptions": {
+        "ecmaVersion": 6,
+        "sourceType": "module",
+        "ecmaFeatures": {
+            "jsx": true
+        }
+    },
+    "env": {
+        "browser": true,
+        "commonjs": true
+    },
+    "extends": [
+        "eslint:recommended",
+        "airbnb-base",
+        "react-app"
+    ],
+    "rules": {
+        "indent": [
+            "error",
+            2
+        ],
+        "quotes": [
+            "error",
+            "single"
+        ],
+        "semi": [
+            "error",
+            "never"
+        ],
+        "linebreak-style": [
+            "error",
+            "unix"
+        ]
+    }
+}
