@@ -3,12 +3,13 @@ import { connect } from 'react-redux'
 import TodoListFooter from './components/TodoListFooter/TodoListFooter'
 import TaskInput from './components/TaskInput/TaskInput'
 import TasksList from './components/TasksList/TasksList'
-import { addTask, deleteTask, completeTask } from './ac/index'
+import {
+  addTask, deleteTask, completeTask, changeFilter,
+} from './ac/index'
 
 class App extends React.Component {
   state = {
     taskText: '',
-    filter: 'all',
   }
 
   // getTasks(119876).then((tasksFromServer) => {
@@ -28,7 +29,6 @@ class App extends React.Component {
     })
   }
 
-
   addTask = (e) => {
     const { taskText } = this.state
 
@@ -43,13 +43,25 @@ class App extends React.Component {
   };
 
 
-  changeFilter = (filterValue) => {
-    this.setState({ filter: filterValue })
+  filterTasks = (filter, tasks) => {
+    switch (filter) {
+    case 'active':
+      return tasks.filter(task => !task.isCompleted)
+      break
+    case 'completed':
+      return tasks.filter(task => task.isCompleted)
+      break
+    default:
+      return tasks
+    }
   };
 
   render() {
-    const { filter, taskText } = this.state
-    const { filteredTasks, deleteTask, completeTask } = this.props
+    const { taskText } = this.state
+    const {
+      tasks, deleteTask, completeTask, filter, changeFilter,
+    } = this.props
+    const filteredTasks = this.filterTasks(filter, tasks)
 
     return (
       <div className="container-fluid">
@@ -63,6 +75,7 @@ class App extends React.Component {
         <TodoListFooter
           amount={filteredTasks.length}
           filter={filter}
+          changeFilter={changeFilter}
         />
       </div>
     )
@@ -70,6 +83,9 @@ class App extends React.Component {
 }
 
 
-export default connect(state => ({
-  filteredTasks: state.tasks,
-}), { addTask, deleteTask, completeTask })(App)
+export default connect(({ tasks, filter }) => ({
+  tasks,
+  filter,
+}), {
+  addTask, deleteTask, completeTask, changeFilter,
+})(App)

@@ -3,7 +3,7 @@ import './TodoListFooter.css'
 
 class TodoListFooter extends React.Component {
   handleFilterChanged = (e) => {
-    this.props.onFilterChanged(e.currentTarget.dataset.value)
+    this.props.changeFilter(e.currentTarget.dataset.value)
   }
 
   render() {
@@ -12,21 +12,21 @@ class TodoListFooter extends React.Component {
       <footer>
         <div>{amount} items left</div>
         <div
-          className={filter === 'all' ? 'selected' : ''}
+          className={filter === 'all' ? 'active' : ''}
           data-value="all"
           onClick={this.handleFilterChanged}
         >All</div>
         <div
-          className={filter === 'selected' ? 'selected' : ''}
-          data-value="selected"
+          className={filter === 'active' ? 'active' : ''}
+          data-value="active"
           onClick={this.handleFilterChanged}
         >active</div>
         <div
-          className={filter === 'complited' ? 'selected' : ''}
-          data-value="complited"
+          className={filter === 'complited' ? 'active' : ''}
+          data-value="completed"
           onClick={this.handleFilterChanged}
-        >complited</div>
-        <div >clear complited</div>
+        >completed</div>
+        <div >clear completed</div>
       </footer>
     )
   }
