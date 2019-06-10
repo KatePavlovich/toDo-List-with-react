@@ -1,98 +1,75 @@
 import React from 'react'
-import TodoListFooter from './components/todoListFooter'
-import TaskCreator from './components/taskCreator'
-import TasksList from './components/tasksList'
-import { createTask, getTasks } from './components/services'
+import { connect } from 'react-redux'
+import TodoListFooter from './components/TodoListFooter/TodoListFooter'
+import TaskInput from './components/TaskInput/TaskInput'
+import TasksList from './components/TasksList/TasksList'
+import { addTask, deleteTask, completeTask } from './ac/index'
 
 class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      tasks: [],
-      filter: 'all',
-    }
+  state = {
+    taskText: '',
+    filter: 'all',
+  }
 
-    getTasks(119876).then((tasksFromServer) => {
-      const tasks = tasksFromServer.map(i => ({
-        id: i.id,
-        title: i.title,
-        isDone: i.done,
-      }))
-      this.setState({
-        tasks,
-      })
+  // getTasks(119876).then((tasksFromServer) => {
+  //   const tasks = tasksFromServer.map(i => ({
+  //     id: i.id,
+  //     title: i.title,
+  //     isDone: i.done,
+  //   }))
+  //   this.setState({
+  //     tasks,
+  //   })
+  // })
+
+  handleChange = (e) => {
+    this.setState({
+      taskText: e.target.value,
     })
   }
 
-  putTaskToState = (e) => {
+
+  addTask = (e) => {
+    const { taskText } = this.state
+
     if (e.key === 'Enter') {
-      const newTaskInput = e.currentTarget
-      createTask(newTaskInput.value, 119876).then((data) => {
-        this.setState({
-          tasks: [
-            ...this.state.tasks,
-            { title: data.task.title, isDone: data.task.done, id: data.task.id },
-          ],
-        })
-        newTaskInput.value = ''
+      const { addTask } = this.props
+      addTask((new Date()).getTime(), taskText, false)
+
+      this.setState({
+        taskText: '',
       })
     }
   };
 
-  toggleTaskStatus = (task) => {
-    const newTasksList = [...this.state.tasks]
-    newTasksList.forEach((t) => {
-      if (t.id === task.id) {
-        t.isDone = !task.isDone
-      }
-    })
-
-    this.setState({
-      tasks: newTasksList,
-    })
-  };
 
   changeFilter = (filterValue) => {
     this.setState({ filter: filterValue })
   };
 
-  clearComplited = () => {
-    this.setState({ tasks: this.state.tasks.filter(i => !i.isDone) })
-  };
-
   render() {
-    const { tasks, filter } = this.state
-    let filteredTasks = []
-    switch (filter) {
-    case 'all':
-      filteredTasks = tasks
-      break
-    case 'selected':
-      filteredTasks = tasks.filter(i => !i.isDone)
-      break
-    case 'complited':
-      filteredTasks = tasks.filter(i => i.isDone)
-      break
-    default:
-      filteredTasks = tasks
-    }
+    const { filter, taskText } = this.state
+    const { filteredTasks, deleteTask, completeTask } = this.props
+
     return (
       <div className="container-fluid">
         <h2 className="app-header"> todo list </h2>
-        <TaskCreator putTaskToState={this.putTaskToState} />
+        <TaskInput onKeyPress={this.addTask} onChange={this.handleChange} value={taskText} />
         <TasksList
           tasks={filteredTasks}
-          onUpdateTask={this.toggleTaskStatus}
+          completeTask={completeTask}
+          deleteTask={deleteTask}
         />
         <TodoListFooter
-          tasks={tasks}
+          amount={filteredTasks.length}
           filter={filter}
-          onFilterChanged={this.changeFilter}
-          clearComplited={this.clearComplited}
         />
       </div>
     )
   }
 }
 
-export default App
+
+export default connect(state => ({
+  filteredTasks: state.tasks,
+}), { addTask, deleteTask, completeTask })(App)

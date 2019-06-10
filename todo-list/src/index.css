@@ -2,31 +2,3 @@
   display: grid;
   grid-gap: 1em;
 }
-
-.tasks {
-  display: grid;
-  grid-gap: 0.5em;
-}
-
-.task {
-  display: grid;
-  grid-template-columns: 1fr 10fr 1fr;
-  align-items: center;
-}
-
-.deleteBtn {
-  color: #ddd;
-}
-
-.deleteBtn:hover {
-  color: #000;
-}
-
-.done {
-    text-decoration: line-through;
-}
-footer {
-  display: grid;
-  grid-template-columns: 2fr repeat(5, 1fr);
-}
-.selected {color: red;}

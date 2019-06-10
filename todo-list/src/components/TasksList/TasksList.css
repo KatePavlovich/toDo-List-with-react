@@ -1,0 +1,4 @@
+.tasks {
+    display: grid;
+    grid-gap: 0.5em;
+  }
