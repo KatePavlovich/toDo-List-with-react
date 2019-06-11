@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './TodoListFooter.css'
 
 class TodoListFooter extends React.Component {
@@ -33,3 +34,8 @@ class TodoListFooter extends React.Component {
 }
 
 export default TodoListFooter
+
+TodoListFooter.propTypes = {
+  amount: PropTypes.number,
+  filter: PropTypes.string,
+}

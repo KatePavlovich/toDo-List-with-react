@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './Task.css'
 
 const Task = ({
@@ -12,3 +13,19 @@ const Task = ({
 )
 
 export default Task
+
+Task.propTypes = {
+  text: PropTypes.string,
+  id: PropTypes.string,
+  isCompleted: PropTypes.bool,
+  deleteTask: PropTypes.func,
+  completeTask: PropTypes.func,
+}
+
+Task.defaultProps = {
+  text: '',
+  id: '',
+  isCompleted: false,
+  deleteTask: () => { },
+  completeTask: () => { },
+}

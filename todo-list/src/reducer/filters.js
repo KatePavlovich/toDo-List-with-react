@@ -6,7 +6,6 @@ const filter = (state = BASE_FILTER, { activeFilter, type }) => {
   switch (type) {
   case CHANGE_FILTER:
     return activeFilter
-    break
   default:
     return state
   }

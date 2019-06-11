@@ -47,10 +47,8 @@ class App extends React.Component {
     switch (filter) {
     case 'active':
       return tasks.filter(task => !task.isCompleted)
-      break
     case 'completed':
       return tasks.filter(task => task.isCompleted)
-      break
     default:
       return tasks
     }

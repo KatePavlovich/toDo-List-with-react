@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import './TaskInput.css'
 
 const TaskInput = ({ value, onChange, onKeyPress }) => (
@@ -6,3 +7,15 @@ const TaskInput = ({ value, onChange, onKeyPress }) => (
 )
 
 export default TaskInput
+
+TaskInput.propTypes = {
+  value: PropTypes.string,
+  onChange: PropTypes.func,
+  onKeyPress: PropTypes.func,
+}
+
+TaskInput.defaultProps = {
+  value: '',
+  onChange: () => { },
+  onKeyPress: () => { },
+}
