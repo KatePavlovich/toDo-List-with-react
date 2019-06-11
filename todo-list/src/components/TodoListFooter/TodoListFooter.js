@@ -1,5 +1,9 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
+import {
+  clearCompletedTasks,
+} from '../../ac'
 import './TodoListFooter.css'
 
 
@@ -10,7 +14,9 @@ const filtersBtns = [
 
 ]
 
-const TodoListFooter = ({ amount, filter, changeFilter }) => (
+const TodoListFooter = ({
+  amount, filter, changeFilter, clearCompletedTasks,
+}) => (
   <footer>
     <div>{amount} items left</div>
     {filtersBtns.map(({ text }) => (<div
@@ -18,11 +24,15 @@ const TodoListFooter = ({ amount, filter, changeFilter }) => (
       onClick={() => changeFilter(text)} key={text}
     >{text}</div>))
     }
-    <div >clear completed</div>
+    <div onClick={clearCompletedTasks}>clear completed</div>
   </footer >
 )
 
-export default TodoListFooter
+
+export default connect(null, {
+  clearCompletedTasks,
+})(TodoListFooter)
+
 
 TodoListFooter.propTypes = {
   amount: PropTypes.number,

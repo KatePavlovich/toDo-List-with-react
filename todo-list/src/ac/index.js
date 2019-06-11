@@ -1,5 +1,5 @@
 import {
-  ADD_TASK, DELETE_TASK, COMPLETE_TASK, CHANGE_FILTER,
+  ADD_TASK, DELETE_TASK, COMPLETE_TASK, CHANGE_FILTER, CLEAR_COMPLETED_TASKS,
 } from '../constants'
 
 export const addTask = (id, text, isCompleted) => ({
@@ -22,4 +22,8 @@ export const completeTask = id => ({
 export const changeFilter = activeFilter => ({
   type: CHANGE_FILTER,
   activeFilter,
+})
+
+export const clearCompletedTasks = () => ({
+  type: CLEAR_COMPLETED_TASKS,
 })
