@@ -4,7 +4,7 @@ import TodoListFooter from './components/TodoListFooter/TodoListFooter'
 import TaskInput from './components/TaskInput/TaskInput'
 import TasksList from './components/TasksList/TasksList'
 import {
-  addTask, deleteTask, completeTask, changeFilter,
+  addTask, deleteTask, completeTask, changeFilter, fetchToDos,
 } from './ac/index'
 
 class App extends React.Component {
@@ -12,16 +12,15 @@ class App extends React.Component {
     taskText: '',
   }
 
-  // getTasks(119876).then((tasksFromServer) => {
-  //   const tasks = tasksFromServer.map(i => ({
-  //     id: i.id,
-  //     title: i.title,
-  //     isDone: i.done,
-  //   }))
-  //   this.setState({
-  //     tasks,
-  //   })
-  // })
+  unsubscribe = null
+
+  componentDidMount = async () => {
+    this.unsubscribe = this.props.getToDos()
+  }
+
+  componentWillUnmount = () => {
+    this.unsubscribe()
+  }
 
   handleChange = (e) => {
     this.setState({
@@ -33,8 +32,8 @@ class App extends React.Component {
     const { taskText } = this.state
 
     if (e.key === 'Enter') {
-      const { addTask } = this.props
-      addTask((new Date()).getTime(), taskText, false)
+      const { addTodo } = this.props
+      addTodo({ text: taskText, isCompleted: false })
 
       this.setState({
         taskText: '',
@@ -80,10 +79,14 @@ class App extends React.Component {
   }
 }
 
+const mapDispatchToProps = dispatch => ({
+  addTodo: task => dispatch(addTask(task)),
+  deleteTask: id => dispatch(deleteTask(id)),
+  getToDos: () => dispatch(fetchToDos()),
+})
+
 
 export default connect(({ tasks, filter }) => ({
   tasks,
   filter,
-}), {
-  addTask, deleteTask, completeTask, changeFilter,
-})(App)
+}), mapDispatchToProps)(App)

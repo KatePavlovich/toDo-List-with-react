@@ -16,7 +16,7 @@ export default Task
 
 Task.propTypes = {
   text: PropTypes.string,
-  id: PropTypes.number,
+  id: PropTypes.string,
   isCompleted: PropTypes.bool,
   deleteTask: PropTypes.func,
   completeTask: PropTypes.func,
