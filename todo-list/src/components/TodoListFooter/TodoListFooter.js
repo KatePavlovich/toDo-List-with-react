@@ -15,7 +15,7 @@ const filtersBtns = [
 ]
 
 const TodoListFooter = ({
-  amount, filter, changeFilter, clearCompletedTasks,
+  amount, filter, changeFilter, todos,
 }) => (
   <footer>
     <div>{amount} items left</div>
@@ -24,7 +24,7 @@ const TodoListFooter = ({
       onClick={() => changeFilter(text)} key={text}
     >{text}</div>))
     }
-    <div onClick={clearCompletedTasks}>clear completed</div>
+    <div onClick={() => clearCompletedTasks(todos)}>clear completed</div>
   </footer >
 )
 
@@ -44,5 +44,4 @@ TodoListFooter.defaultProps = {
   amount: 0,
   filter: 'all',
   changeFilter: () => { },
-
 }

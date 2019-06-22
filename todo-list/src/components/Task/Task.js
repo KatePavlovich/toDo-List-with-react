@@ -6,7 +6,7 @@ const Task = ({
   text, isCompleted, deleteTask, id, completeTask,
 }) => (
   <li className="task">
-    <input type="checkbox" checked={isCompleted ? 'checked' : ''} onChange={() => completeTask(id)} />
+    <input type="checkbox" checked={isCompleted ? 'checked' : ''} onChange={() => completeTask(id, isCompleted)} />
     <p className={isCompleted ? 'done' : ''}>{text}</p>
     <span className="deleteBtn" onClick={() => deleteTask(id)}>x</span>
   </li>

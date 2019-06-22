@@ -73,6 +73,7 @@ class App extends React.Component {
           amount={filteredTasks.length}
           filter={filter}
           changeFilter={changeFilter}
+          todos={tasks}
         />
       </div>
     )
@@ -83,6 +84,8 @@ const mapDispatchToProps = dispatch => ({
   addTodo: task => dispatch(addTask(task)),
   deleteTask: id => dispatch(deleteTask(id)),
   getToDos: () => dispatch(fetchToDos()),
+  completeTask: (id, isCompleted) => dispatch(completeTask(id, isCompleted)),
+  changeFilter: activeFilter => dispatch(changeFilter(activeFilter)),
 })
 
 
