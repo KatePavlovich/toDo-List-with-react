@@ -1,25 +1,38 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { auth, createUserProfileDocument } from './config/firebase'
 import TodoListFooter from './components/TodoListFooter/TodoListFooter'
 import TaskInput from './components/TaskInput/TaskInput'
 import TasksList from './components/TasksList/TasksList'
 import {
   addTask, deleteTask, completeTask, changeFilter, fetchToDos,
 } from './ac/index'
+import Authentification from './components/Authentication/Authentication'
+
 
 class App extends React.Component {
   state = {
     taskText: '',
+    user: null,
   }
 
-  unsubscribe = null
+
+  unsubscribeFromFireStore = null
+
+  unsubscribeFromAuth = null
 
   componentDidMount = async () => {
-    this.unsubscribe = this.props.getToDos()
+    this.unsubscribeFromFireStore = this.props.getToDos()
+    this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
+      const user = await createUserProfileDocument(userAuth)
+      console.log('user', user)
+      this.setState({ user })
+    })
   }
 
   componentWillUnmount = () => {
-    this.unsubscribe()
+    this.unsubscribeFromFireStore()
+    this.unsubscribeFromAuth()
   }
 
   handleChange = (e) => {
@@ -30,10 +43,21 @@ class App extends React.Component {
 
   addTask = (e) => {
     const { taskText } = this.state
+    const {
+      uid, displayName, email, photoURL,
+    } = auth.currentUser || {}
+
+    const todo = {
+      text: taskText,
+      isCompleted: false,
+      user: {
+        uid, displayName, email, photoURL,
+      },
+    }
 
     if (e.key === 'Enter') {
       const { addTodo } = this.props
-      addTodo({ text: taskText, isCompleted: false })
+      addTodo(todo)
 
       this.setState({
         taskText: '',
@@ -54,7 +78,7 @@ class App extends React.Component {
   };
 
   render() {
-    const { taskText } = this.state
+    const { taskText, user } = this.state
     const {
       tasks, deleteTask, completeTask, filter, changeFilter,
     } = this.props
@@ -63,6 +87,7 @@ class App extends React.Component {
     return (
       <div className="container-fluid">
         <h2 className="app-header"> todo list </h2>
+        <Authentification user={user}></Authentification>
         <TaskInput onKeyPress={this.addTask} onChange={this.handleChange} value={taskText} />
         <TasksList
           tasks={filteredTasks}
