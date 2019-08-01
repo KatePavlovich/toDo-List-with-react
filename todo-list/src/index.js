@@ -1,13 +1,18 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Provider } from 'react-redux'
+import { BrowserRouter as Router } from 'react-router-dom'
+import TodosProvider from './providers/TodosProvider'
 import './index.css'
 import App from './app'
-import store from './store'
+import UserProvider from './providers/UserProvider'
 
 ReactDOM.render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <Router>
+    <UserProvider>
+      <TodosProvider >
+        <App />
+      </TodosProvider >
+    </UserProvider>
+  </Router>,
   document.getElementById('root'),
 )

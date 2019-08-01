@@ -1,10 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import PropTypes from 'prop-types'
-import {
-  clearCompletedTasks,
-} from '../../ac'
-import './TodoListFooter.css'
+// import {
+//   clearCompletedTasks,
+// } from '../ac'
+import styled from 'styled-components'
 
 
 const filtersBtns = [
@@ -17,21 +17,19 @@ const filtersBtns = [
 const TodoListFooter = ({
   amount, filter, changeFilter, todos,
 }) => (
-  <footer>
+  <Footer>
     <div>{amount} items left</div>
     {filtersBtns.map(({ text }) => (<div
       className={text === filter ? 'active' : ''}
       onClick={() => changeFilter(text)} key={text}
     >{text}</div>))
     }
-    <div onClick={() => clearCompletedTasks(todos)}>clear completed</div>
-  </footer >
+    {/* <div onClick={() => clearCompletedTasks(todos)}>clear completed</div> */}
+  </Footer >
 )
 
 
-export default connect(null, {
-  clearCompletedTasks,
-})(TodoListFooter)
+export default TodoListFooter
 
 
 TodoListFooter.propTypes = {
@@ -45,3 +43,11 @@ TodoListFooter.defaultProps = {
   filter: 'all',
   changeFilter: () => { },
 }
+
+
+const Footer = styled.footer`
+  display: grid;
+  grid-template-columns: 2fr repeat(5, 1fr);
+`
+
+// .active { color: red;}

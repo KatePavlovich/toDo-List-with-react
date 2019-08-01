@@ -1,8 +1,8 @@
 import React from 'react'
-import SignIn from '../SignIn/SignIn'
-import SignUp from '../SignUp/SignUp'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
 
-const SignInAndSignUp = ({ }) => (
+const SignInAndSignUp = () => (
   <div>
     <SignIn></SignIn>
     <SignUp></SignUp>

@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { auth, createUserProfileDocument } from '../../config/firebase'
+import { auth, createUserProfileDocument } from '../config/firebase'
 
 
 class SignUp extends Component {
@@ -11,17 +11,16 @@ class SignUp extends Component {
     this.setState({ [name]: value })
   };
 
-  handleSubmit = (event) => {
+  handleSubmit = async (event) => {
     event.preventDefault()
     const { email, password, displayName } = this.state
 
     try {
-      const { user } = auth.createUserWithEmailAndPassword(email, password)
+      const { user } = await auth.createUserWithEmailAndPassword(email, password)
 
       createUserProfileDocument(user, { displayName })
-      user.updateProfile({ displayName })
     } catch (error) {
-      console.error()
+      console.error(error)
     }
 
     this.setState({ displayName: '', email: '', password: '' })
