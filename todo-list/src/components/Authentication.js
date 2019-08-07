@@ -6,7 +6,6 @@ import SignInAndSignUp from './SignInAndSignUp'
 const Authentification = ({ loading }) => {
   const user = useContext(UserContext)
 
-  console.log('user from authentification', user)
   if (loading) return null
   return (
     <div>{user ? <CurrentUser {...user}></CurrentUser> : <SignInAndSignUp></SignInAndSignUp>}</div>

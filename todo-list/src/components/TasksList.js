@@ -6,7 +6,6 @@ import TaskInput from './TaskInput'
 
 const TasksList = () => {
   const todos = useContext(TodosContext)
-  console.log('todos from tasklist', todos)
   return (
     <section>
       <TaskInput />
