@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import styled from 'styled-components'
+import { Form, Input } from './Styles'
 import { signInWithGoogle } from '../config/firebase'
 
 class SignIn extends Component {
@@ -17,27 +19,44 @@ class SignIn extends Component {
   render() {
     const { email, password } = this.state
     return (
-      <form className="SignIn" onSubmit={this.handleSubmit}>
+      <Form className="SignIn" onSubmit={this.handleSubmit}>
         <h2>Sign In</h2>
-        <input
+        <Input
           type="email"
           name="email"
           placeholder="Email"
           value={email}
           onChange={this.handleChange}
         />
-        <input
+        <Input
           type="password"
           name="password"
           placeholder="Password"
           value={password}
           onChange={this.handleChange}
         />
-        <input type="submit" value="Sign In" />
-        <button onClick={signInWithGoogle}>Sign In With Google</button>
-      </form>
+        <Input type="submit" value="Sign In" />
+        <Button onClick={signInWithGoogle}>Sign In With Google</Button>
+      </Form>
     )
   }
 }
 
 export default SignIn
+
+const Button = styled.button`
+  height: 44px;
+  max-width: 350px;
+  width: 100%;
+  padding-left: 0.5rem;
+  font-family: 'Beth Ellen', cursive;
+  box-sizing: content-box;
+  border-radius: 10px;
+  border: 1px solid #f1f1f1;
+  box-shadow: 2px 2px 0 #000;
+  opacity: 0.7;
+
+  &:hover {
+    opacity: 1;
+  }
+`
