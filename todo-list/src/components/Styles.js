@@ -20,7 +20,7 @@ export const Input = styled.input`
   width: 100%;
   padding-left: 0.5rem;
   box-sizing: content-box;
-  font-family: 'Beth Ellen', cursive;
+  font-family: 'Open Sans', sans-serif;
   border-radius: 10px;
   border: 1px solid #f1f1f1;
   box-shadow: 2px 2px 0 #000;
