@@ -4,7 +4,7 @@ import { collectIdsAndDocs } from '../utilities'
 
 export const TodosContext = createContext()
 
-class TodosProvider extends Component {
+class PostssProvider extends Component {
   state = { todos: [] }
 
   unsubscribeFromFireStore = null
@@ -22,13 +22,12 @@ class TodosProvider extends Component {
     this.unsubscribeFromFireStore()
   }
 
-
   render() {
     const { todos } = this.state
     const { children } = this.props
 
-    return (<TodosContext.Provider value={todos}>{children}</TodosContext.Provider>)
+    return <TodosContext.Provider value={todos}>{children}</TodosContext.Provider>
   }
 }
 
-export default TodosProvider
+export default PostssProvider

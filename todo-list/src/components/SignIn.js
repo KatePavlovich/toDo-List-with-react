@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styled from 'styled-components'
 import { Form, Input } from './Styles'
 import { signInWithGoogle } from '../config/firebase'
+import ProtectedRoute from './ProtectedRoute'
 
 class SignIn extends Component {
   state = { email: '', password: '' }
@@ -14,6 +15,17 @@ class SignIn extends Component {
   handleSubmit = (event) => {
     event.preventDefault()
     this.setState({ email: '', password: '' })
+  }
+
+  signIn = () => {
+    signInWithGoogle()
+      .then(() => {
+        const { user } = this.props
+        console.log('An', user)
+      })
+      .catch((error) => {
+        console.log('An error happened.')
+      })
   }
 
   render() {
@@ -36,13 +48,13 @@ class SignIn extends Component {
           onChange={this.handleChange}
         />
         <Input type="submit" value="Sign In" />
-        <Button onClick={signInWithGoogle}>Sign In With Google</Button>
+        <Button onClick={this.signIn}>Sign In With Google</Button>
       </Form>
     )
   }
 }
 
-export default SignIn
+export default ProtectedRoute(SignIn)
 
 const Button = styled.button`
   height: 44px;

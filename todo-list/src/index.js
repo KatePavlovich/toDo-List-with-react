@@ -9,9 +9,9 @@ import UserProvider from './providers/UserProvider'
 ReactDOM.render(
   <Router>
     <UserProvider>
-      <TodosProvider >
+      <TodosProvider>
         <App />
-      </TodosProvider >
+      </TodosProvider>
     </UserProvider>
   </Router>,
   document.getElementById('root'),
