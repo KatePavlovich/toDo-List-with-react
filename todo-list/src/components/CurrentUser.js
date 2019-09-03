@@ -6,32 +6,33 @@ import { signOut } from '../config/firebase'
 
 const CurrentUser = ({
   displayName, photoURL, email, createdAt, children,
-}) => {
-  console.log('DD / MM / YYYY', createdAt)
-  return (
-    <CurrentUserSection className="CurrentUser">
-      <div >
-        {photoURL && <Img src={photoURL} alt={displayName} />}
-        <div >
-          <Link to="profile"><h2>{displayName}</h2></Link>
-          <p className="email">{email}</p>
-          {createdAt && <p className="created-at">{moment(createdAt.toDate()).format('DD.MM.YYYY')}</p>}
-        </div>
-      </div>
+}) => (
+  <CurrentUserSection className="CurrentUser">
+    <div>
+      {photoURL && <Img src={photoURL} alt={displayName} />}
       <div>
-        <div>{children}</div>
-        <button onClick={signOut}>Sign Out</button>
+        <Link to="profile">
+          <h2>{displayName}</h2>
+        </Link>
+        <p className="email">{email}</p>
+        {createdAt && (
+          <p className="created-at">{moment(createdAt.toDate()).format('DD.MM.YYYY')}</p>
+        )}
       </div>
-    </CurrentUserSection>
-  )
-}
+    </div>
+    <div>
+      <div>{children}</div>
+      <button onClick={signOut}>Sign Out</button>
+    </div>
+  </CurrentUserSection>
+)
 
 export default CurrentUser
 
-const CurrentUserSection = styled.section`
-`
+const CurrentUserSection = styled.section``
 
 const Img = styled.img`
-    width: 70px;
-    height: 70px;
-    border-radius: 50%;`
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+`
