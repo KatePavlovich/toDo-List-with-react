@@ -6,7 +6,7 @@ import { auth, firestore, storage } from '../config/firebase'
 import withUser from './WithUser'
 
 class UserProfile extends Component {
-  state = { displayName: '' }
+  state = { displayName: '', fileName: '' }
 
   imageInput = null
 
@@ -20,12 +20,16 @@ class UserProfile extends Component {
   }
 
   get file() {
-    return this.imageInput && this.imageInput.file[0]
+    return this.imageInput && this.imageInput.files[0]
   }
 
   handleChange = (event) => {
     const { name, value } = event.target
     this.setState({ [name]: value })
+
+    if (this.file) {
+      this.setState({ fileName: this.imageInput.files[0].name })
+    }
   }
 
   handleSubmit = (event) => {
@@ -34,6 +38,7 @@ class UserProfile extends Component {
 
     if (displayName) {
       this.userRef.update({ displayName })
+      this.setState({ displayName: '' })
     }
 
     if (this.file) {
@@ -45,13 +50,13 @@ class UserProfile extends Component {
         .put(this.file)
         .then(response => response.ref.getDownloadURL())
         .then(photoURL => this.userRef.update({ photoURL }))
+        .then(this.setState({ fileName: '' }))
     }
   }
 
   render() {
-    const { displayName } = this.state
+    const { displayName, fileName } = this.state
     const { user } = this.props
-    console.log('propsiki', this.props)
     return (
       <Section className="userProfile">
         {user && (
@@ -82,8 +87,14 @@ class UserProfile extends Component {
         <FormStyled onSubmit={this.handleSubmit}>
           <h2>Change photo</h2>
           <FormLine gridTemplateColumns="5fr 1fr">
-            <InputFile type="file" name="file" id="file" ref={ref => (this.imageInput = ref)} />
-            <LabelFile for="file">Choose a file</LabelFile>
+            <InputFile
+              type="file"
+              name="file"
+              id="file"
+              ref={ref => (this.imageInput = ref)}
+              onChange={this.handleChange}
+            />
+            <LabelFile for="file">{fileName || 'Choose a file'}</LabelFile>
             <Input type="submit" value="Change" />
           </FormLine>
         </FormStyled>
