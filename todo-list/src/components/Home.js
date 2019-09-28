@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import styled, { css } from 'styled-components'
 import { UserContext } from '../providers/UserProvider'
-import CurrentUser from './CurrentUser'
+import TasksList from './TasksList'
 
 const Home = () => {
   const user = useContext(UserContext)
@@ -10,7 +10,7 @@ const Home = () => {
   return (
     <>
       {user ? (
-        <CurrentUser {...user}></CurrentUser>
+        <TasksList></TasksList>
       ) : (
         <Authentification>
           <LinkStyled to="/signin">
@@ -121,4 +121,5 @@ const DoorRight = styled.div`
 
 const Title = styled.h1`
   margin-top: 5rem;
+  font-family: 'Beth Ellen', cursive;
 `
